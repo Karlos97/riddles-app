@@ -1,0 +1,40 @@
+<%- include('../partials/documentHeader.ejs') %>
+    <main class="px-3">
+        <div class="w-50 position-absolute top-50 start-50 translate-middle">
+            <h1>
+                <%= editing ? 'Edit' : 'Create' %> your riddle
+            </h1>
+            <form action="/user/<% if (editing) { %>edit-riddle<% } else { %>add-riddle<% } %>" method="POST">
+
+                <div class="mb-4">
+                    <label for="question" class="form-label">Question</label>
+                    <input type="question" name="question" class="form-control" id="question"
+                        placeholder="This is the question" value="<% if (editing) { %><%= riddle.question %><% } %>">
+                </div>
+
+
+                <div class="mb-4">
+                    <label for="answer" class="form-label">Answer</label>
+                    <input type="answer" name="answer" class="form-control" id="answer" placeholder="This is the answer"
+                        value="<% if (editing) { %><%= riddle.answer %><% } %>">
+                </div>
+
+                <div class="mb-4">
+                    <label for="reward" class="form-label">Reward</label>
+                    <input type="reward" name="reward" class="form-control" id="reward" placeholder="This is the reward"
+                        value="<% if (editing) { %><%= riddle.reward %><% } %>">
+                </div>
+
+                <% if (editing) { %>
+                    <input type="hidden" value="<%= riddle._id %>" name="riddleId">
+                    <% } %>
+                        <button type="submit" class="btn btn-light">
+                            <% if (editing) { %>Update!<% } else { %>Create!<% } %>
+                        </button>
+            </form>
+        </div>
+    </main>
+
+
+
+    <%- include('../partials/documentFooter.ejs') %>

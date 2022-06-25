@@ -1,0 +1,26 @@
+<%- include('partials/documentHeader.ejs') %>
+    <main class="px-3">
+        <div class="w-50 position-absolute top-50 start-50 translate-middle">
+            <% if(riddle.answer===riddle.userAnswer) { %>
+                <p class="text-success">
+                    Congratulations! You've answered the question correctly. Below is your reward:
+                </p>
+                <p>
+                    <%= riddle.reward %>
+                </p>
+                <% }else{ %>
+                    <p class="text-danger">Unfortunately You've answered the question incorrectly. Try again by hitting
+                        button "Back".
+                    </p>
+                    <a class="btn btn-light" href="<%= backPath %>">
+                        Go Back!
+                    </a>
+                    <% }%>
+
+
+        </div>
+    </main>
+
+
+
+    <%- include('partials/documentFooter.ejs') %>

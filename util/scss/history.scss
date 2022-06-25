@@ -1,0 +1,16 @@
+.history-list {
+  margin: 4rem 0;
+
+  .list-group-item {
+    margin-bottom: 1rem;
+    border-radius: 8px;
+  }
+
+  .item-nav {
+    margin-top: 1rem;
+    .badge {
+      text-decoration: none;
+      border-width: 0;
+    }
+  }
+}
