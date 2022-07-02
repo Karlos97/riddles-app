@@ -1,4 +1,5 @@
 const path = require('path');
+const fs= require('fs');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -9,8 +10,12 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const errorController = require('./controllers/errors');
 const User = require('./models/user');
 
+const helmet = require('helmet')
+const compression = require('compression')
+const morgan = require('morgan')
+
 const MONGODB_URI =
-  'mongodb+srv://orzel:pomaranczowy@cluster0.xvoufyq.mongodb.net/?retryWrites=true&w=majority';
+  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.xvoufyq.mongodb.net/?retryWrites=true&w=majority`;
 
 const app = express();
 
@@ -25,6 +30,12 @@ app.set('views', 'views');
 const userRoutes = require('./routes/user');
 const authRoutes = require('./routes/auth');
 const mainRoutes = require('./routes/main');
+
+const accesLog = fs.createWriteStream(path.join(__dirname, 'acces.log'), {flags:'a'})
+
+app.use(helmet())
+app.use(compression())
+app.use(morgan('combined', {stream: accesLog}))
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -67,7 +78,7 @@ mongoose
         user.save();
       }
     });
-    app.listen(3000);
+    app.listen(process.env.port || 3000);
   })
   .catch((err) => {
     console.log(err);
